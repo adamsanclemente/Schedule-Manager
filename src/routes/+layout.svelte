@@ -1,7 +1,7 @@
 <script lang="ts">
-    import Header from "$lib/components/Header.svelte";
-import "../app.pcss"
-    import { ModeWatcher } from "mode-watcher";
+	import Header from '$lib/components/Header.svelte';
+	import '../app.pcss';
+	import { ModeWatcher } from 'mode-watcher';
 </script>
 
 <!-- Theme Watcher -->
@@ -9,6 +9,6 @@ import "../app.pcss"
 
 <!-- This element wraps all "pages" below it -->
 <Header />
-<div class="container">
-    <slot />
+<div class="container min-h-full max-h-screen">
+	<slot />
 </div>
