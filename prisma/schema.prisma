@@ -6,3 +6,32 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model Company {
+  id String @id @default(cuid()) @map("_id") @db.ObjectId
+  login String @unique
+  name String
+  employees Employee[]
+  events Event[]
+}
+
+model Employee {
+  id String @id @default(cuid()) @map("_id") @db.ObjectId
+  name String
+  company Company @relation(fields: [companyId], references: [id])
+  companyId String @db.ObjectId
+  events Event[]
+}
+
+model Event {
+  id String @id @default(cuid()) @map("_id") @db.ObjectId
+  company Company @relation(fields: [companyId], references: [id])
+  companyId String @db.ObjectId
+  employee Employee @relation(fields: [employeeId], references: [id])
+  employeeId String @db.ObjectId
+
+  // Event Fields
+  title String
+  start DateTime
+  end DateTime
+}

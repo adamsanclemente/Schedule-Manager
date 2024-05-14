@@ -11,13 +11,13 @@
 
     let plugins = [TimeGrid, DayGrid, List];
     let options = {
-        view: 'timeGridWeek', 
+        view: 'timeGridDay', 
         events: [
             // your list of events
         ]
     };
 </script>
 
-<Calendar {plugins} {options} />
-<h1 class="text-slate-800">Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<div class="flex justify-center  min-h-screen max-h-screen bg-slate-400">
+    <h1 class="text-center">Test</h1>
+</div>
