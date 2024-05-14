@@ -23,5 +23,5 @@
       </Form.Control>
       <Form.FieldErrors />
     </Form.Field>
-    <Form.Button class="w-full my-2">Submit</Form.Button>
+    <Form.Button class="w-full my-4">Submit</Form.Button>
   </form>
