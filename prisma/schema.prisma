@@ -33,6 +33,8 @@ model Event {
   companyId String @db.ObjectId
   employee Employee @relation(fields: [employeeId], references: [id])
   employeeId String @db.ObjectId
+  job Job @relation(fields: [jobId], references: [id])
+  jobId String @db.ObjectId
 
   // Event Fields
   title String
@@ -47,5 +49,6 @@ model Job {
   companyId String @db.ObjectId
   employeeIds String[] @db.ObjectId
   employees Employee[] @relation(fields: [employeeIds], references: [id])
+  events Event[]
   hours Int
 }
