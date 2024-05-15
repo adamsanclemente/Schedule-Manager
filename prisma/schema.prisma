@@ -13,14 +13,18 @@ model Company {
   name String
   employees Employee[]
   events Event[]
+  jobs Job[]
 }
 
 model Employee {
   id String @id @default(cuid()) @map("_id") @db.ObjectId
-  name String
+  firstName String
+  lastName String
   company Company @relation(fields: [companyId], references: [id])
   companyId String @db.ObjectId
   events Event[]
+  jobIds String[] @db.ObjectId
+  jobs Job[] @relation(fields: [jobIds], references: [id])
 }
 
 model Event {
@@ -32,6 +36,16 @@ model Event {
 
   // Event Fields
   title String
-  start DateTime
-  end DateTime
+  color String?
+  date DateTime
+}
+
+model Job {
+  id String @id @default(cuid()) @map("_id") @db.ObjectId
+  title String
+  company Company @relation(fields: [companyId], references: [id])
+  companyId String @db.ObjectId
+  employeeIds String[] @db.ObjectId
+  employees Employee[] @relation(fields: [employeeIds], references: [id])
+  hours Int
 }
