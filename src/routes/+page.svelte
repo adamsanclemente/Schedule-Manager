@@ -1,20 +1,4 @@
 <script lang='ts'>
-	// @ts-ignore
-	import Calendar from '@event-calendar/core';
-	// @ts-ignore
-	import TimeGrid from '@event-calendar/time-grid';
-	// @ts-ignore
-	import DayGrid from '@event-calendar/day-grid';
-	// @ts-ignore
-	import List from '@event-calendar/list';
-
-	let plugins = [TimeGrid, DayGrid, List];
-	let options = {
-		view: 'timeGridDay',
-		events: [
-			// your list of events
-		]
-	};
     import type { PageData } from "./$types.ts";
 	import * as Card from '$lib/components/ui/card';
     import * as Alert from '$lib/components/ui/alert';

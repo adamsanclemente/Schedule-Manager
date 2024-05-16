@@ -76,3 +76,19 @@
     @apply bg-background text-foreground;
   }
 }
+
+.ec-toolbar {
+  @apply flex flex-col
+}
+
+.ec-toolbar > div:has(> .ec-title) {
+  @apply min-w-full py-3;
+}
+
+.ec-toolbar > div > .ec-button-group {
+  @apply min-w-full pt-3;
+}
+
+.ec-title {
+  @apply text-xl font-medium text-left min-w-full;
+}
