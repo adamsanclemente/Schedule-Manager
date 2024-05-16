@@ -21,11 +21,11 @@
 			// your list of events
 		],
 		headerToolbar: {
-			start: 'title',
-			center: 'prev,next,today,timeGridDay,timeGridWeek,dayGridMonth,listWeek',
+			start: 'title,prev,next',
+			center: 'today,timeGridDay,timeGridWeek,dayGridMonth,listWeek',
 			end: ''
 		},
-		height: '640px'
+		height: '550px'
 	};
 </script>
 

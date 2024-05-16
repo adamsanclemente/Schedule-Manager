@@ -9,7 +9,7 @@
      const { errors } = superForm(data.form);
 </script>
 
-<div class="grid place-content-center py-60">
+<div class="grid place-content-center py-30">
 	<Card.Root>
 		<Card.Header>
 			<Card.Title>View a Schedule</Card.Title>
