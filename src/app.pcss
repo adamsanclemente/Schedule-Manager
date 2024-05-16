@@ -85,8 +85,16 @@
   @apply min-w-full py-3;
 }
 
-.ec-toolbar > div:first-child:has(> .ec-button-group) {
-  @apply min-w-full justify-between flex pt-3;
+.ec-toolbar > div:has(> .ec-button-group) {
+  @apply w-full;
+}
+
+.ec-toolbar > div:first-child:has(> .ec-button-group) > .ec-button-group {
+  @apply min-w-full grid grid-cols-10 pt-3;
+}
+
+.ec-toolbar > div:has(> .ec-button-group > .ec-today) {
+  @apply grid place-items-center min-w-full;
 }
 
 .ec-toolbar > div > .ec-button-group {
@@ -94,5 +102,5 @@
 }
 
 .ec-title {
-  @apply text-xl font-medium text-left min-w-full;
+  @apply text-xl font-medium text-left col-span-8;
 }
