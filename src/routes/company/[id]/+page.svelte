@@ -25,7 +25,7 @@
 			center: 'today,timeGridDay,timeGridWeek,dayGridMonth,listWeek',
 			end: ''
 		},
-		height: '450px'
+		height: '400px'
 	};
 </script>
 
@@ -41,7 +41,7 @@
 	<Calendar {plugins} {options} />
 </div>
 
-<div class="py-6">
+<div class="py-3">
 	<form class="flex flex-row justify-evenly gap-3">
 		<div class="flex flex-row gap-3 w-[88%]">
 			<Select.Root>
