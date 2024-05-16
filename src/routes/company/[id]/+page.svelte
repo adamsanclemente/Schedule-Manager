@@ -25,7 +25,7 @@
 			center: 'today,timeGridDay,timeGridWeek,dayGridMonth,listWeek',
 			end: ''
 		},
-		height: '550px'
+		height: '450px'
 	};
 </script>
 
