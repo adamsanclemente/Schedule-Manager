@@ -142,7 +142,7 @@
 						</div>
 					</div>
 					<Dialog.Footer>
-						c
+						<Form.Button>Create</Form.Button>
 					</Dialog.Footer>
 				</form>
 			</Dialog.Content>
