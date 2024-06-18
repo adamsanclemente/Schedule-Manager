@@ -18,7 +18,8 @@ async function main() {
         data: {
             firstName: 'Test',
             lastName: 'Employee',
-            companyId: company.id
+            companyId: company.id,
+            maxHours: 8
         }
     })
 
