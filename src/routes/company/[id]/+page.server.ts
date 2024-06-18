@@ -29,6 +29,12 @@ export const load = (async ({ params }) => {
         }
     })
 
+    const events = await db.event.findMany({
+        where: {
+            companyId: params.id
+        }
+    })
+
     // Forms
     const createWorkerForm = await superValidate(zod(createWorkerSchema));
     const createJobForm = await superValidate(zod(createJobSchema));
@@ -40,7 +46,8 @@ export const load = (async ({ params }) => {
         createJobForm,
         data: {
             workers,
-            jobs
+            jobs,
+            events
         }
     };
 }) satisfies PageServerLoad;

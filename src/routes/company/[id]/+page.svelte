@@ -26,9 +26,7 @@
 	let plugins = [TimeGrid, DayGrid, List];
 	let options = {
 		view: 'timeGridDay',
-		events: [
-			// your list of events
-		],
+		events: data.data.events,
 		headerToolbar: {
 			start: 'title,prev,next',
 			center: 'today,timeGridDay,timeGridWeek,dayGridMonth,listWeek',
