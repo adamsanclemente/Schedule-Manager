@@ -7,12 +7,12 @@ export const loginSchema = z.object({
 export const createWorkerSchema = z.object({
     firstName: z.string().min(3).max(255),
     lastName: z.string().min(3).max(255),
-    dailyHours: z.number().int().min(1).max(24)
+    dailyHours: z.coerce.number().int().min(1).max(24)
 })
 
 export const createJobSchema = z.object({
     title: z.string().min(3).max(255),
-    hours: z.number().int().min(1)
+    hours: z.coerce.number().int().min(1)
 })
 
 export type LoginSchema = typeof loginSchema;

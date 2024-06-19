@@ -55,7 +55,6 @@ export const load = (async ({ params }) => {
 export const actions = {
     createWorker: async (event) => {
         const form = await superValidate(event.request, zod(createWorkerSchema));
-        console.log(form)
         if(!form.valid) return fail(400, { form })
 
         // Create the worker
