@@ -113,7 +113,7 @@
 										Actions
 									</DropdownMenu.Trigger>
 									<DropdownMenu.Content>
-										<DropdownMenu.Item><a href={`/company/${data.company.id}/worker/${worker.id}`}>Edit</a></DropdownMenu.Item>
+										<a href={`/company/${data.company.id}/worker/${worker.id}`}><DropdownMenu.Item>Edit</DropdownMenu.Item></a>
 										<DropdownMenu.Item>Delete</DropdownMenu.Item>
 									</DropdownMenu.Content>
 								</DropdownMenu.Root>
@@ -151,7 +151,7 @@
 										Actions
 									</DropdownMenu.Trigger>
 									<DropdownMenu.Content>
-										<DropdownMenu.Item><a href={`/company/${data.company.id}/job/${job.id}`}>Edit</a></DropdownMenu.Item>
+										<a href={`/company/${data.company.id}/job/${job.id}`}><DropdownMenu.Item>Edit</DropdownMenu.Item></a>
 										<DropdownMenu.Item>Delete</DropdownMenu.Item>
 									</DropdownMenu.Content>
 								</DropdownMenu.Root>
