@@ -41,6 +41,8 @@ model Event {
   title String
   color String?
   date DateTime
+  start DateTime
+  end DateTime
 }
 
 model Job {

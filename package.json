@@ -24,6 +24,7 @@
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@types/eslint": "^8.56.0",
 		"@types/node": "^20.12.12",
+		"@types/validator": "^13.12.0",
 		"@typescript-eslint/eslint-plugin": "^7.0.0",
 		"@typescript-eslint/parser": "^7.0.0",
 		"autoprefixer": "^10.4.19",
@@ -53,6 +54,7 @@
 		"lucide-svelte": "^0.378.0",
 		"mode-watcher": "^0.3.0",
 		"tailwind-merge": "^2.3.0",
-		"tailwind-variants": "^0.2.1"
+		"tailwind-variants": "^0.2.1",
+		"validator": "^13.12.0"
 	}
 }

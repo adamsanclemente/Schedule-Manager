@@ -40,16 +40,32 @@ async function main() {
     // Create a calander event for the job
     await prisma.event.create({
         data: {
-            title: 'Make coffee',
-            date: new Date(),
-            color: 'red',
+            title: 'Make Coffee - Test Employee',
+            date: new Date('2024-06-19'),
+            start: new Date('2024-06-19T08:00:00'),
+            end: new Date('2024-06-19T17:00:00'),
+            color: '#b72205',
             jobId: job.id,
             companyId: company.id,
             employeeId: employee.id
         }
     })
 
-    console.log('Created event')
+    // Create Lunch Break for the employee
+    await prisma.event.create({
+        data: {
+            title: 'Lunch Break - Test Employee',
+            date: new Date('2024-06-19'),
+            start: new Date('2024-06-19T12:00:00'),
+            end: new Date('2024-06-19T13:00:00'),
+            color: '#477e47',
+            employeeId: employee.id,
+            jobId: job.id,
+            companyId: company.id
+        }
+    })
+
+    console.log('Created events')
 }
 
 // Run the seed function

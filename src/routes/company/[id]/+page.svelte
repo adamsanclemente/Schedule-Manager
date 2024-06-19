@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	export let data: PageData;
-	import { UserRoundPlus, PackagePlus, Plus } from 'lucide-svelte';
+	import { UserRoundPlus, PackagePlus } from 'lucide-svelte';
 	import { Button, buttonVariants } from '$lib/components/ui/button';
 	import * as Select from '$lib/components/ui/select';
 	import * as Dialog from '$lib/components/ui/dialog';
@@ -17,6 +17,7 @@
 	import List from '@event-calendar/list';
 	import CWForm from './CWForm.svelte';
 	import CJForm from './CJForm.svelte';
+	import CEForm from './CEForm.svelte';
 
 	let plugins = [TimeGrid, DayGrid, List];
 	let options = {
@@ -27,7 +28,7 @@
 			center: 'today,timeGridDay,timeGridWeek,dayGridMonth,listWeek',
 			end: ''
 		},
-		height: '400px'
+		height: '600px'
 	};
 
 	export const CWFormOpen = writable(false);
@@ -76,40 +77,8 @@
 </div>
 
 <div class="py-3">
-	<form class="flex flex-row justify-evenly gap-3">
-		<div class="flex flex-row gap-3 w-[88%]">
-			<Select.Root>
-				<Select.Trigger class="w-[50%]">
-					<Select.Value placeholder=" Choose a Worker" />
-				</Select.Trigger>
-				<Select.Content>
-					{#if data.data.workers.length === 0}
-						<Select.Item value="no-workers">No Workers</Select.Item>
-					{/if}
-
-					{#each data.data.workers as worker}
-						<Select.Item value={worker.id}>{worker.firstName} {worker.lastName}</Select.Item>
-					{/each}
-				</Select.Content>
-			</Select.Root>
-
-			<Select.Root>
-				<Select.Trigger class="w-[50%]">
-					<Select.Value placeholder=" Choose a Job" />
-				</Select.Trigger>
-				<Select.Content>
-					{#if data.data.jobs.length === 0}
-						<Select.Item value="no-jobs">No Jobs</Select.Item>
-					{/if}
-
-					{#each data.data.jobs as job}
-						<Select.Item value={job.id}>{job.title}</Select.Item>
-					{/each}
-				</Select.Content>
-			</Select.Root>
-		</div>
-		<Button class="w-[12%]" size="icon" variant="outline"><Plus /></Button>
-	</form>
+<h2 class="text-xl font-bold my-1">Assign a Job</h2>
+<CEForm data={data.createEventForm} workers={data.data.workers} jobs={data.data.jobs} />
 </div>
 
 <div class="w-full flex justify-evenly gap-3">
