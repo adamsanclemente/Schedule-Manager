@@ -40,7 +40,6 @@ export const load = (async ({ params }) => {
     const createJobForm = await superValidate(zod(createJobSchema));
     const createEventForm = await superValidate(zod(createEventSchema));
 
-
     return {
         company,
         createWorkerForm,
@@ -141,7 +140,7 @@ export const actions = {
 
 
 
-        
+
 
 
         return { form }

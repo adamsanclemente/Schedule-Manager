@@ -1,10 +1,12 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	export let data: PageData;
-	import { UserRoundPlus, PackagePlus } from 'lucide-svelte';
+	import { UserRoundPlus, PackagePlus, EllipsisVertical } from 'lucide-svelte';
 	import { Button, buttonVariants } from '$lib/components/ui/button';
 	import * as Select from '$lib/components/ui/select';
 	import * as Dialog from '$lib/components/ui/dialog';
+	import * as Table from '$lib/components/ui/table';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { writable } from 'svelte/store';
 
 	// @ts-ignore
@@ -18,6 +20,7 @@
 	import CWForm from './CWForm.svelte';
 	import CJForm from './CJForm.svelte';
 	import CEForm from './CEForm.svelte';
+	import { Root } from '$lib/components/ui/alert';
 
 	let plugins = [TimeGrid, DayGrid, List];
 	let options = {
@@ -81,7 +84,82 @@
 <CEForm data={data.createEventForm} workers={data.data.workers} jobs={data.data.jobs} />
 </div>
 
-<div class="w-full flex justify-evenly gap-3">
-	<Button variant="outline" class="w-[50%]">Manage Workers</Button>
-	<Button variant="outline" class="w-[50%]">Manage Jobs</Button>
+<div class="w-full flex justify-evenly gap-3 py-6">
+	<Dialog.Root>
+		<Dialog.Trigger class={buttonVariants({ variant: 'outline' }) + ' w-[50%]'} >Manage Workers</Dialog.Trigger>
+		<Dialog.Content>
+			<Dialog.Header>
+				<Dialog.Title>Manage Workers</Dialog.Title>
+				<Dialog.Description>Manage workers here.</Dialog.Description>
+			</Dialog.Header>
+			<Table.Root>
+				<Table.Header>
+					<Table.Row>
+						<Table.Head>First Name</Table.Head>
+						<Table.Head>Last Name</Table.Head>
+						<Table.Head>Maximum Daily Hours</Table.Head>
+						<Table.Head>Actions</Table.Head>
+					</Table.Row>
+				</Table.Header>
+				<Table.Body>
+					{#each data.data.workers as worker}
+						<Table.Row>
+							<Table.Cell>{worker.firstName}</Table.Cell>
+							<Table.Cell>{worker.lastName}</Table.Cell>
+							<Table.Cell>{worker.maxHours}</Table.Cell>
+							<Table.Cell>
+								<DropdownMenu.Root>
+									<DropdownMenu.Trigger class={buttonVariants({ variant: 'outline' }) + ' w-[100%]'}>
+										Actions
+									</DropdownMenu.Trigger>
+									<DropdownMenu.Content>
+										<DropdownMenu.Item><a href={`/company/${data.company.id}/worker/${worker.id}`}>Edit</a></DropdownMenu.Item>
+										<DropdownMenu.Item>Delete</DropdownMenu.Item>
+									</DropdownMenu.Content>
+								</DropdownMenu.Root>
+							</Table.Cell>
+						</Table.Row>
+					{/each}
+				</Table.Body>
+			</Table.Root>
+		</Dialog.Content>
+	</Dialog.Root>
+	
+	<Dialog.Root>
+		<Dialog.Trigger class={buttonVariants({ variant: 'outline' }) + ' w-[50%]'} >Manage Jobs</Dialog.Trigger>
+		<Dialog.Content>
+			<Dialog.Header>
+				<Dialog.Title>Manage Jobs</Dialog.Title>
+				<Dialog.Description>Manage jobs here.</Dialog.Description>
+			</Dialog.Header>
+			<Table.Root>
+				<Table.Header>
+					<Table.Row>
+						<Table.Head>Title</Table.Head>
+						<Table.Head>Hours</Table.Head>
+						<Table.Head>Actions</Table.Head>
+					</Table.Row>
+				</Table.Header>
+				<Table.Body>
+					{#each data.data.jobs as job}
+						<Table.Row>
+							<Table.Cell>{job.title}</Table.Cell>
+							<Table.Cell>{job.hours}</Table.Cell>
+							<Table.Cell>
+								<DropdownMenu.Root>
+									<DropdownMenu.Trigger class={buttonVariants({ variant: 'outline' }) + ' w-[100%]'}>
+										Actions
+									</DropdownMenu.Trigger>
+									<DropdownMenu.Content>
+										<DropdownMenu.Item><a href={`/company/${data.company.id}/job/${job.id}`}>Edit</a></DropdownMenu.Item>
+										<DropdownMenu.Item>Delete</DropdownMenu.Item>
+									</DropdownMenu.Content>
+								</DropdownMenu.Root>
+							</Table.Cell>
+						</Table.Row>
+					{/each}
+				</Table.Body>
+			</Table.Root>
+		</Dialog.Content>
+	</Dialog.Root>
 </div>
