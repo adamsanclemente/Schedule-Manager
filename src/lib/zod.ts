@@ -39,7 +39,15 @@ export const createEventSchema = z.object({
     startDate: z.string().refine(validator.isISO8601, "Invalid date"),
 })
 
+export const confirmSchema = z.object({
+    confirm: z.string().refine(
+        (value) => validator.equals("Confirm", value), // Ensure this is a function that returns a boolean
+        "Invalid confirmation"
+    )
+})
+
 export type LoginSchema = typeof loginSchema;
 export type CreateWorkerSchema = typeof createWorkerSchema;
 export type CreateJobSchema = typeof createJobSchema;
 export type CreateEventSchema = typeof createEventSchema;
+export type ConfirmSchema = typeof confirmSchema;

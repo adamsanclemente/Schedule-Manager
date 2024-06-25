@@ -51,7 +51,8 @@ export const load = (async ({ params }) => {
         createEventForm,
         data: {
             workers,
-            jobs: filteredJobs,
+            jobs,
+            filteredJobs,
             events
         }
     };

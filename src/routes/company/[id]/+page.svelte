@@ -81,7 +81,7 @@
 
 <div class="py-3">
 <h2 class="text-xl font-bold my-1">Assign a Job</h2>
-<CEForm data={data.createEventForm} workers={data.data.workers} jobs={data.data.jobs} />
+<CEForm data={data.createEventForm} workers={data.data.workers} jobs={data.data.filteredJobs} />
 </div>
 
 <div class="w-full flex justify-evenly gap-3 py-6">
@@ -114,7 +114,7 @@
 									</DropdownMenu.Trigger>
 									<DropdownMenu.Content>
 										<a href={`/company/${data.company.id}/worker/${worker.id}`}><DropdownMenu.Item>Edit</DropdownMenu.Item></a>
-										<DropdownMenu.Item>Delete</DropdownMenu.Item>
+										<a href={`/company/${data.company.id}/worker/${worker.id}/delete`}><DropdownMenu.Item>Delete</DropdownMenu.Item></a>
 									</DropdownMenu.Content>
 								</DropdownMenu.Root>
 							</Table.Cell>
