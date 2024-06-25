@@ -4,6 +4,7 @@ import { redirect, fail } from '@sveltejs/kit';
 import { zod } from 'sveltekit-superforms/adapters';
 import { superValidate } from 'sveltekit-superforms';
 import { createEventSchema, createJobSchema, createWorkerSchema } from '$lib/zod';
+import { scheduleJobEvents } from '$lib/functions/scheduling';
 
 export const load = (async ({ params }) => {
     // Get the company from the database
@@ -29,6 +30,9 @@ export const load = (async ({ params }) => {
         }
     })
 
+    // Filter out any jobs with workers already assigned
+    const filteredJobs = jobs.filter(job => job.employeeIds.length === 0);
+
     const events = await db.event.findMany({
         where: {
             companyId: params.id
@@ -47,7 +51,7 @@ export const load = (async ({ params }) => {
         createEventForm,
         data: {
             workers,
-            jobs,
+            jobs: filteredJobs,
             events
         }
     };
@@ -115,8 +119,8 @@ export const actions = {
         if (!job) return fail(400, { message: "Invalid job" })
 
         // Check if the worker is already assigned to the job
-        if (job.employeeIds.includes(worker.id)) {
-            return fail(400, { message: "Worker is already assigned to the job" })
+        if (job.employeeIds.length > 1) {
+            return fail(400, { message: "A worker is already assigned to the job" })
         } else {
             // Assign the worker to the job
             await db.job.update({
@@ -129,20 +133,46 @@ export const actions = {
             })
         }
 
-        // Get all other events for the worker
-        // const workerEvents = await db.event.findMany({
-        //     where: {
-        //         employeeId: worker.id
-        //     }
-        // })
+        // Get all events to create
+        const eventsToCreate = await scheduleJobEvents(worker.id, `${worker.firstName} ${worker.lastName}`, job.id, job.title, job.hours, new Date(form.data.startDate), worker.maxHours);
 
-        // The work hours are 8 - 5 with a 1 hour break at 12
+        // Create the events
+        for (const event of eventsToCreate) {
+            // Get the current timezone offset for the local system
+            const localOffset = new Date().getTimezoneOffset();
 
+            // Create a date object for 'America/New_York' timezone
+            const easternDate = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
 
+            // Get the timezone offset for Eastern Time by comparing it to UTC
+            const easternOffset = easternDate.getTimezoneOffset();
 
+            // Calculate the difference in offsets
+            const timezoneOffset = localOffset - easternOffset;
 
+            // Convert start and end times to Eastern Time
+            const startInEastern = new Date(event.start.getTime() - timezoneOffset * 60000 + 4 * 60 * 60 * 1000);
+            const endInEastern = new Date(event.end.getTime() - timezoneOffset * 60000 + 4 * 60 * 60 * 1000);
 
+            // Ensure the date is set to the start of the day in Eastern Time
+            const dateInEastern = new Date(startInEastern);
+            dateInEastern.setHours(0, 0, 0, 0);
 
-        return { form }
+            await db.event.create({
+                data: {
+                    companyId: job.companyId,
+                    employeeId: event.workerId,
+                    jobId: event.jobId,
+                    start: startInEastern,
+                    end: endInEastern,
+                    title: event.title,
+                    color: form.data.color,
+                    date: dateInEastern
+                }
+            });
+        }
+
+        // Refresh the page
+        return redirect(302, `/company/${event.params.id}`);
     }
 }
