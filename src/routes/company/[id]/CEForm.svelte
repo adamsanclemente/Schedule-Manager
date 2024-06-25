@@ -119,7 +119,7 @@
 			<Form.FieldErrors />
 		</Form.Field>
 
-		<Form.Field {form} name="startDate" class="w-full sm:w-1/4">
+		<Form.Field {form} name="startDate" class="w-full md:w-1/4">
 			<Form.Control let:attrs>
 				<Form.Label>Start Date</Form.Label>
 				<Input type="date" {...attrs} bind:value={$formData.startDate} />
