@@ -19,7 +19,7 @@
 <p class="text-gray-500">Enter required fields to delete this job.</p>
 
 <form method="POST" use:enhance action="?/deleteJob">
-	<Form.Field {form} name="confrim">
+	<Form.Field {form} name="confirm">
 		<Form.Control let:attrs>
 			<Form.Label>Are you sure you want to delete this job?</Form.Label>
 			<Input {...attrs} bind:value={$formData.confirm} placeholder="Confirm" />
