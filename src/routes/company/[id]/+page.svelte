@@ -3,7 +3,6 @@
 	export let data: PageData;
 	import { UserRoundPlus, PackagePlus, EllipsisVertical } from 'lucide-svelte';
 	import { Button, buttonVariants } from '$lib/components/ui/button';
-	import * as Select from '$lib/components/ui/select';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import * as Table from '$lib/components/ui/table';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
@@ -20,7 +19,7 @@
 	import CWForm from './CWForm.svelte';
 	import CJForm from './CJForm.svelte';
 	import CEForm from './CEForm.svelte';
-	import { Root } from '$lib/components/ui/alert';
+	import { goto } from '$app/navigation';
 
 	let plugins = [TimeGrid, DayGrid, List];
 	let options = {
@@ -31,7 +30,10 @@
 			center: 'today,timeGridDay,timeGridWeek,dayGridMonth,listWeek',
 			end: ''
 		},
-		height: '600px'
+		height: '600px',
+		eventClick: function(info: { event: any }) {
+			goto(`/company/${data.company.id}/event/${info.event.id}`);
+		}
 	};
 
 	export const CWFormOpen = writable(false);

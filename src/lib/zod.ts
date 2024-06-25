@@ -29,7 +29,9 @@ export const colors = {
     "#616161": "Graphite",
 }
 
-type Color = keyof typeof colors;
+export const colorsArray = Object.entries(colors).map(([key, value]) => ({ key, value }));
+
+export type Color = keyof typeof colors;
 
 
 export const createEventSchema = z.object({
@@ -37,6 +39,13 @@ export const createEventSchema = z.object({
     job: z.string(),
     worker: z.string(),
     startDate: z.string().refine(validator.isISO8601, "Invalid date"),
+})
+
+export const editEventSchema = z.object({
+    color: z.enum(Object.keys(colors) as [Color, ...Color[]]),
+    title: z.string().min(3).max(255),
+    start: z.date(),
+    end: z.date(),
 })
 
 export const confirmSchema = z.object({
@@ -50,4 +59,5 @@ export type LoginSchema = typeof loginSchema;
 export type CreateWorkerSchema = typeof createWorkerSchema;
 export type CreateJobSchema = typeof createJobSchema;
 export type CreateEventSchema = typeof createEventSchema;
+export type EditEventSchema = typeof editEventSchema;
 export type ConfirmSchema = typeof confirmSchema;
