@@ -152,7 +152,7 @@
 									</DropdownMenu.Trigger>
 									<DropdownMenu.Content>
 										<a href={`/company/${data.company.id}/job/${job.id}`}><DropdownMenu.Item>Edit</DropdownMenu.Item></a>
-										<DropdownMenu.Item>Delete</DropdownMenu.Item>
+										<a href={`/company/${data.company.id}/job/${job.id}/delete`}><DropdownMenu.Item>Delete</DropdownMenu.Item></a>
 									</DropdownMenu.Content>
 								</DropdownMenu.Root>
 							</Table.Cell>
