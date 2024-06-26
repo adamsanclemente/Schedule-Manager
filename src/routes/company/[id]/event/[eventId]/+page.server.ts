@@ -51,13 +51,32 @@ export const actions = {
         const updatedEnd = new Date(end);
         updatedEnd.setHours(updatedEnd.getHours() + 4);
 
+        const eventtoedit = await db.event.findUnique({
+            where: {
+                id: event.params.eventId
+            }
+        })
+
+        if (!eventtoedit) {
+            setFlash({ message: 'Event not found', type: 'error' }, event)
+            return setError(form, 'Event not found');
+        }
+
+        await db.event.updateMany({
+            where: {
+                signature: eventtoedit.signature
+            },
+            data: {
+                color,
+                title
+            }
+        });
+
         await db.event.update({
             where: {
                 id: event.params.eventId
             },
             data: {
-                color,
-                title,
                 start: updatedStart,
                 end: updatedEnd
             }
