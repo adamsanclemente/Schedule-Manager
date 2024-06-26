@@ -31,7 +31,8 @@
 	const form = superForm(data, {
 		validators: zodClient(createEventSchema),
 		invalidateAll: true,
-		resetForm: false
+		resetForm: false,
+		multipleSubmits: 'allow'
 	});
 
 	const { form: formData, enhance } = form;
