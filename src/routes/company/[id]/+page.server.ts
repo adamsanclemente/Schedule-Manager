@@ -115,12 +115,19 @@ export const actions = {
 
         // Create the event
 
+        let worker
         // Get the worker
-        const worker = await db.employee.findUnique({
-            where: {
-                id: form.data.worker
-            }
-        })
+        try {
+            worker = await db.employee.findUnique({
+                where: {
+                    id: form.data.worker
+                }
+            })
+        } catch {
+            setFlash({ type: 'error', message: 'Database Error - Please Refresh Page' }, event)
+            return setError(form, "Database Error")
+        }
+
 
         if (!worker) {
             setFlash({ type: 'error', message: 'Invalid worker' }, event)
