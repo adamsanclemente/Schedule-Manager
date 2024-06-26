@@ -8,6 +8,9 @@
 	import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { colors } from '$lib/zod';
+	import { invalidateAll } from '$app/navigation';
+	import type { Writable } from 'svelte/store';
+	export let CalendarRefresh: Writable<boolean>;
 	export let data: SuperValidated<Infer<CreateEventSchema>>;
 	export let workers: {
 		id: string;
@@ -159,7 +162,7 @@
 			<Form.FieldErrors />
 		</Form.Field>
 
-		<Form.Button name="submit" class="mt-1 sm:mt-8 w-full sm:w-[12%]" size="icon" variant="outline"
+		<Form.Button name="submit" on:click={() => $CalendarRefresh = !$CalendarRefresh} class="mt-1 sm:mt-8 w-full sm:w-[12%]" size="icon" variant="outline"
 			><Plus /></Form.Button
 		>
 	</div>

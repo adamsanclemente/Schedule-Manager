@@ -22,7 +22,7 @@
 	import { goto } from '$app/navigation';
 
 	let plugins = [TimeGrid, DayGrid, List];
-	let options = {
+	$:options = {
 		view: 'timeGridDay',
 		events: data.data.events,
 		headerToolbar: {
@@ -38,6 +38,7 @@
 
 	export const CWFormOpen = writable(false);
 	export const CJFormOpen = writable(false);
+	export const CalendarRefresh = writable(false);
 </script>
 
 <svelte:head>
@@ -78,12 +79,14 @@
 </div>
 
 <div class="grid">
+	{#key $CalendarRefresh}
 	<Calendar {plugins} {options} />
+	{/key}
 </div>
 
 <div class="py-3">
 <h2 class="text-xl font-bold my-1">Assign a Job</h2>
-<CEForm data={data.createEventForm} workers={data.data.workers} jobs={data.data.filteredJobs} />
+<CEForm data={data.createEventForm} workers={data.data.workers} jobs={data.data.filteredJobs} CalendarRefresh={CalendarRefresh} />
 </div>
 
 <div class="w-full flex justify-evenly gap-3 py-6">
