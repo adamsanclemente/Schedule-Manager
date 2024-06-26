@@ -4,6 +4,7 @@ import type { PageServerLoad } from './$types';
 import { confirmSchema } from '$lib/zod';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
+import { setFlash } from 'sveltekit-flash-message/server';
 
 export const load = (async () => {
     const form = await superValidate({
@@ -18,11 +19,15 @@ export const load = (async () => {
 export const actions = {
     deleteEvent: async (event) => {
         const form = await superValidate(event.request, zod(confirmSchema));
-        if (!form.valid) return setError(form, 'confirm', 'Invalid confirmation');
+        if (!form.valid) {
+            setFlash({ message: 'Invalid confirmation', type: 'error' }, event)
+            return setError(form, 'confirm', 'Invalid confirmation');
+        }
 
         const { confirm } = form.data;
 
         if (confirm !== 'Confirm') {
+            setFlash({ message: 'Invalid confirmation', type: 'error' }, event)
             return setError(form, 'confirm', 'Invalid confirmation');
         }
 
@@ -32,6 +37,7 @@ export const actions = {
             }
         })
 
+        setFlash({ message: 'Event deleted', type: 'success' }, event)
         return redirect(302, `/company/${event.params.id}`);
     }
 }

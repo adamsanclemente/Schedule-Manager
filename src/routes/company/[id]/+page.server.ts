@@ -2,9 +2,10 @@ import type { PageServerLoad } from './$types';
 import db from "$lib/db";
 import { redirect, fail } from '@sveltejs/kit';
 import { zod } from 'sveltekit-superforms/adapters';
-import { superValidate } from 'sveltekit-superforms';
+import { setError, superValidate } from 'sveltekit-superforms';
 import { createEventSchema, createJobSchema, createWorkerSchema } from '$lib/zod';
 import { scheduleJobEvents } from '$lib/functions/scheduling';
+import { setFlash } from 'sveltekit-flash-message/server';
 
 export const load = (async ({ params }) => {
     // Get the company from the database
@@ -73,8 +74,12 @@ export const actions = {
             }
         })
 
-        if (!worker) return fail(500, { message: "Failed to create worker" })
+        if (!worker) {
+            setFlash({type: 'error', message: 'Failed to create worker'}, event)
+            return setError(form, "Failed to create worker")
+        }
 
+        setFlash({type: 'success', message: 'Worker created successfully'}, event)
         return redirect(302, `/company/${event.params.id}`);
     },
     createJob: async (event) => {
@@ -90,13 +95,18 @@ export const actions = {
             }
         })
 
-        if (!job) return fail(500, { message: "Failed to create job" })
+        if (!job)
+            {
+                setFlash({type: 'error', message: 'Failed to create job'}, event)
+                return setError(form, "Failed to create job")
+            
+            }
 
+        setFlash({type: 'success', message: 'Job created successfully'}, event)
         return redirect(302, `/company/${event.params.id}`);
     },
     createEvent: async (event) => {
         const form = await superValidate(event.request, zod(createEventSchema));
-        console.log(form)
         if (!form.valid) return fail(400, { form })
 
         // Create the event
@@ -108,7 +118,10 @@ export const actions = {
             }
         })
 
-        if (!worker) return fail(400, { message: "Invalid worker" })
+        if (!worker) {
+            setFlash({type: 'error', message: 'Invalid worker'}, event)
+            return setError(form, "Invalid worker")
+        }
 
         // Get the job
         const job = await db.job.findUnique({
@@ -117,11 +130,15 @@ export const actions = {
             }
         })
 
-        if (!job) return fail(400, { message: "Invalid job" })
+        if (!job) {
+            setFlash({type: 'error', message: 'Invalid job'}, event)
+            return setError(form, "Invalid job")
+        }
 
         // Check if the worker is already assigned to the job
         if (job.employeeIds.length > 1) {
-            return fail(400, { message: "A worker is already assigned to the job" })
+            setFlash({type: 'error', message: 'A worker is already assigned to the job'}, event)
+            return setError(form, "A worker is already assigned to the job")
         } else {
             // Assign the worker to the job
             await db.job.update({
@@ -174,6 +191,7 @@ export const actions = {
         }
 
         // Refresh the page
+        setFlash({type: 'success', message: 'Events created successfully'}, event)
         return redirect(302, `/company/${event.params.id}`);
     }
 }

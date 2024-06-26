@@ -4,6 +4,7 @@ import type { PageServerLoad } from './$types';
 import { createWorkerSchema } from '$lib/zod';
 import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
+import { setFlash } from 'sveltekit-flash-message/server';
 
 export const load = (async ({ params }) => {
 
@@ -51,6 +52,7 @@ export const actions = {
             }
         });
 
+        setFlash({ message: 'Worker updated', type: 'success' }, event)
         return redirect(302, `/company/${event.params.id}`);
     }
 }

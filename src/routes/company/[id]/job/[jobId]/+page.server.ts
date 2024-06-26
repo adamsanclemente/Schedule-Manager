@@ -1,9 +1,10 @@
-import { superValidate } from 'sveltekit-superforms';
+import { setError, superValidate } from 'sveltekit-superforms';
 import type { PageServerLoad } from './$types';
 import { zod } from 'sveltekit-superforms/adapters';
 import { createJobSchema } from '$lib/zod';
 import { redirect } from '@sveltejs/kit';
 import db from '$lib/db';
+import { setFlash } from 'sveltekit-flash-message/server';
 
 export const load = (async ({ params }) => {
 
@@ -28,7 +29,10 @@ export const load = (async ({ params }) => {
 export const actions = {
     editJob : async (event) => {
         const form = await superValidate(event.request, zod(createJobSchema));
-        if (!form.valid) return { status: 400, body: { form } }
+        if (!form.valid) {
+            setFlash({ message: 'Form Invalid.', type: 'error' }, event)
+            return setError(form, 'Invalid form');
+        }
 
         const { title, hours } = form.data;
 
@@ -42,6 +46,8 @@ export const actions = {
             }
         });
 
+
+        setFlash({ message: 'Job updated', type: 'success' }, event)
         return redirect(302, `/company/${event.params.id}`);
     }
 }

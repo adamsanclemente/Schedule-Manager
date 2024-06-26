@@ -1,10 +1,11 @@
-import { superValidate } from 'sveltekit-superforms';
+import { setError, superValidate } from 'sveltekit-superforms';
 import type { PageServerLoad } from './$types';
 import { zod } from 'sveltekit-superforms/adapters';
 import { editEventSchema } from '$lib/zod';
 import { redirect } from '@sveltejs/kit';
 import db from '$lib/db';
 import { colorsArray, type Color } from '$lib/zod';
+import { setFlash } from 'sveltekit-flash-message/server';
 
 
 export const load = (async ({ params }) => {
@@ -37,7 +38,10 @@ export const load = (async ({ params }) => {
 export const actions = {
     editEvent: async (event) => {
         const form = await superValidate(event.request, zod(editEventSchema));
-        if (!form.valid) return { status: 400, body: { form } }
+        if (!form.valid) {
+            setFlash({ message: 'Form Invalid.', type: 'error' }, event)
+            return setError(form, 'Invalid form');
+        }
 
         const { color, title, start, end } = form.data;
 
@@ -59,6 +63,7 @@ export const actions = {
             }
         });
 
+        setFlash({ message: 'Event updated', type: 'success' }, event)
         return redirect(302, `/company/${event.params.id}`);
     }
 }

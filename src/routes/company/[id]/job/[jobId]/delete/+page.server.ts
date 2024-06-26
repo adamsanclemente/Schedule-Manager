@@ -4,6 +4,7 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { confirmSchema } from '$lib/zod';
 import { redirect } from '@sveltejs/kit';
 import db from '$lib/db';
+import { setFlash } from 'sveltekit-flash-message/server';
 
 export const load = (async () => {
     const form = await superValidate({
@@ -18,11 +19,15 @@ export const load = (async () => {
 export const actions = {
     deleteJob : async (event) => {
         const form = await superValidate(event.request, zod(confirmSchema));
-        if (!form.valid) return setError(form, 'confirm', 'Invalid confirmation');
+        if (!form.valid) {
+            setFlash({ message: 'Invalid confirmation', type: 'error' }, event)
+            return setError(form, 'confirm', 'Invalid confirmation');
+        }
 
         const { confirm } = form.data;
 
         if (confirm !== 'Confirm') {
+            setFlash({ message: 'Invalid confirmation', type: 'error' }, event)
             return setError(form, 'confirm', 'Invalid confirmation');
         }
 
@@ -38,6 +43,7 @@ export const actions = {
             }
         });
 
+        setFlash({ message: 'Job deleted', type: 'success' }, event)
         return redirect(302, `/company/${event.params.id}`);
     }
 }

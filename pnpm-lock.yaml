@@ -24,8 +24,11 @@ importers:
         specifier: ^0.378.0
         version: 0.378.0(svelte@4.2.18)
       mode-watcher:
-        specifier: ^0.3.0
+        specifier: ^0.3.1
         version: 0.3.1(svelte@4.2.18)
+      svelte-sonner:
+        specifier: ^0.3.24
+        version: 0.3.24(svelte@4.2.18)
       tailwind-merge:
         specifier: ^2.3.0
         version: 2.3.0
@@ -102,6 +105,9 @@ importers:
       svelte-check:
         specifier: ^3.6.0
         version: 3.8.1(postcss-load-config@4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.14.4)(typescript@5.4.5)))(postcss@8.4.38)(svelte@4.2.18)
+      sveltekit-flash-message:
+        specifier: ^2.4.4
+        version: 2.4.4(@sveltejs/kit@2.5.16(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.1(@types/node@20.14.4)))(svelte@4.2.18)(vite@5.3.1(@types/node@20.14.4)))(svelte@4.2.18)
       sveltekit-superforms:
         specifier: ^2.13.1
         version: 2.15.1(@sveltejs/kit@2.5.16(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.1(@types/node@20.14.4)))(svelte@4.2.18)(vite@5.3.1(@types/node@20.14.4)))(svelte@4.2.18)
@@ -1648,9 +1654,20 @@ packages:
       typescript:
         optional: true
 
+  svelte-sonner@0.3.24:
+    resolution: {integrity: sha512-txuL0JBUs0v6qGrr0PGCsbXmKHuthdrAkfISYi8umuveF7+gINb6EXl6VmKY9aHhyxCqvVgqd6yophQNrnor4w==}
+    peerDependencies:
+      svelte: '>=3 <5'
+
   svelte@4.2.18:
     resolution: {integrity: sha512-d0FdzYIiAePqRJEb90WlJDkjUEx42xhivxN8muUBmfZnP+tzUgz12DJ2hRJi8sIHCME7jeK1PTMgKPSfTd8JrA==}
     engines: {node: '>=16'}
+
+  sveltekit-flash-message@2.4.4:
+    resolution: {integrity: sha512-CFN03chH/FMEJcBZ/8zKm7RqGee/pwb57Spbbx8QCQPhe7N9ofZHd9iYV2vVy4E9glBo/oQ1IG7VQje6L092wg==}
+    peerDependencies:
+      '@sveltejs/kit': 1.x || 2.x
+      svelte: 3.x || 4.x || >=5.0.0-next.51
 
   sveltekit-superforms@2.15.1:
     resolution: {integrity: sha512-rLzcJTGEzt2oFC1fNYn+ddM25uoCawudHBU7qoLo5gp/JLMRNhtX9gbBMt8imMLo4VcB8339VtxBRcWiMV1faQ==}
@@ -3340,6 +3357,10 @@ snapshots:
       postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.14.4)(typescript@5.4.5))
       typescript: 5.4.5
 
+  svelte-sonner@0.3.24(svelte@4.2.18):
+    dependencies:
+      svelte: 4.2.18
+
   svelte@4.2.18:
     dependencies:
       '@ampproject/remapping': 2.3.0
@@ -3356,6 +3377,11 @@ snapshots:
       locate-character: 3.0.0
       magic-string: 0.30.10
       periscopic: 3.1.0
+
+  sveltekit-flash-message@2.4.4(@sveltejs/kit@2.5.16(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.1(@types/node@20.14.4)))(svelte@4.2.18)(vite@5.3.1(@types/node@20.14.4)))(svelte@4.2.18):
+    dependencies:
+      '@sveltejs/kit': 2.5.16(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.1(@types/node@20.14.4)))(svelte@4.2.18)(vite@5.3.1(@types/node@20.14.4))
+      svelte: 4.2.18
 
   sveltekit-superforms@2.15.1(@sveltejs/kit@2.5.16(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.1(@types/node@20.14.4)))(svelte@4.2.18)(vite@5.3.1(@types/node@20.14.4)))(svelte@4.2.18):
     dependencies:
