@@ -22,7 +22,7 @@
 	import { goto } from '$app/navigation';
 
 	let plugins = [TimeGrid, DayGrid, List];
-	$:options = {
+	$: options = {
 		view: 'timeGridDay',
 		events: data.data.events,
 		headerToolbar: {
@@ -31,7 +31,7 @@
 			end: ''
 		},
 		height: '600px',
-		eventClick: function(info: { event: any }) {
+		eventClick: function (info: { event: any }) {
 			goto(`/company/${data.company.id}/event/${info.event.id}`);
 		}
 	};
@@ -78,20 +78,25 @@
 	</div>
 </div>
 
-<div class="grid">
-	{#key $CalendarRefresh}
+{#key $CalendarRefresh}
 	<Calendar {plugins} {options} />
-	{/key}
-</div>
+{/key}
 
 <div class="py-3">
-<h2 class="text-xl font-bold my-1">Assign a Job</h2>
-<CEForm data={data.createEventForm} workers={data.data.workers} jobs={data.data.filteredJobs} CalendarRefresh={CalendarRefresh} />
+	<h2 class="text-xl font-bold my-1">Assign a Job</h2>
+	<CEForm
+		data={data.createEventForm}
+		workers={data.data.workers}
+		jobs={data.data.filteredJobs}
+		{CalendarRefresh}
+	/>
 </div>
 
 <div class="w-full flex justify-evenly gap-3 py-6">
 	<Dialog.Root>
-		<Dialog.Trigger class={buttonVariants({ variant: 'outline' }) + ' w-[50%]'} >Manage Workers</Dialog.Trigger>
+		<Dialog.Trigger class={buttonVariants({ variant: 'outline' }) + ' w-[50%]'}
+			>Manage Workers</Dialog.Trigger
+		>
 		<Dialog.Content>
 			<Dialog.Header>
 				<Dialog.Title>Manage Workers</Dialog.Title>
@@ -114,12 +119,18 @@
 							<Table.Cell>{worker.maxHours}</Table.Cell>
 							<Table.Cell>
 								<DropdownMenu.Root>
-									<DropdownMenu.Trigger class={buttonVariants({ variant: 'outline' }) + ' w-[100%]'}>
+									<DropdownMenu.Trigger
+										class={buttonVariants({ variant: 'outline' }) + ' w-[100%]'}
+									>
 										Actions
 									</DropdownMenu.Trigger>
 									<DropdownMenu.Content>
-										<a href={`/company/${data.company.id}/worker/${worker.id}`}><DropdownMenu.Item>Edit</DropdownMenu.Item></a>
-										<a href={`/company/${data.company.id}/worker/${worker.id}/delete`}><DropdownMenu.Item>Delete</DropdownMenu.Item></a>
+										<a href={`/company/${data.company.id}/worker/${worker.id}`}
+											><DropdownMenu.Item>Edit</DropdownMenu.Item></a
+										>
+										<a href={`/company/${data.company.id}/worker/${worker.id}/delete`}
+											><DropdownMenu.Item>Delete</DropdownMenu.Item></a
+										>
 									</DropdownMenu.Content>
 								</DropdownMenu.Root>
 							</Table.Cell>
@@ -129,9 +140,11 @@
 			</Table.Root>
 		</Dialog.Content>
 	</Dialog.Root>
-	
+
 	<Dialog.Root>
-		<Dialog.Trigger class={buttonVariants({ variant: 'outline' }) + ' w-[50%]'} >Manage Jobs</Dialog.Trigger>
+		<Dialog.Trigger class={buttonVariants({ variant: 'outline' }) + ' w-[50%]'}
+			>Manage Jobs</Dialog.Trigger
+		>
 		<Dialog.Content>
 			<Dialog.Header>
 				<Dialog.Title>Manage Jobs</Dialog.Title>
@@ -152,12 +165,18 @@
 							<Table.Cell>{job.hours}</Table.Cell>
 							<Table.Cell>
 								<DropdownMenu.Root>
-									<DropdownMenu.Trigger class={buttonVariants({ variant: 'outline' }) + ' w-[100%]'}>
+									<DropdownMenu.Trigger
+										class={buttonVariants({ variant: 'outline' }) + ' w-[100%]'}
+									>
 										Actions
 									</DropdownMenu.Trigger>
 									<DropdownMenu.Content>
-										<a href={`/company/${data.company.id}/job/${job.id}`}><DropdownMenu.Item>Edit</DropdownMenu.Item></a>
-										<a href={`/company/${data.company.id}/job/${job.id}/delete`}><DropdownMenu.Item>Delete</DropdownMenu.Item></a>
+										<a href={`/company/${data.company.id}/job/${job.id}`}
+											><DropdownMenu.Item>Edit</DropdownMenu.Item></a
+										>
+										<a href={`/company/${data.company.id}/job/${job.id}/delete`}
+											><DropdownMenu.Item>Delete</DropdownMenu.Item></a
+										>
 									</DropdownMenu.Content>
 								</DropdownMenu.Root>
 							</Table.Cell>
