@@ -31,13 +31,24 @@ export const actions = {
             return setError(form, 'confirm', 'Invalid confirmation');
         }
 
-        await db.event.delete({
+        const foundEvent = await db.event.findUnique({
             where: {
                 id: event.params.eventId
             }
         })
 
-        setFlash({ message: 'Event deleted', type: 'success' }, event)
+        if (!foundEvent) {
+            setFlash({ message: 'Event not found', type: 'error' }, event)
+            return setError(form, 'confirm', 'Event not found');
+        }
+
+        await db.event.deleteMany({
+            where: {
+                signature: foundEvent.signature
+            }
+        })
+
+        setFlash({ message: 'Events deleted', type: 'success' }, event)
         return redirect(302, `/company/${event.params.id}`);
     }
 }

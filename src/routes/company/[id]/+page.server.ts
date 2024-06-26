@@ -156,6 +156,8 @@ export const actions = {
         // Get all events to create
         const eventsToCreate = await scheduleJobEvents(worker.id, `${worker.firstName} ${worker.lastName}`, job.id, job.title, job.hours, new Date(form.data.startDate), worker.maxHours);
 
+        // Create a random signature for the event
+        const signature = Math.random().toString(36).substring(7);
         // Create the events
         for (const event of eventsToCreate) {
             // Get the current timezone offset for the local system
@@ -187,7 +189,8 @@ export const actions = {
                     end: endInEastern,
                     title: event.title,
                     color: form.data.color,
-                    date: dateInEastern
+                    date: dateInEastern,
+                    signature: signature
                 }
             });
         }

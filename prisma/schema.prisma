@@ -43,6 +43,7 @@ model Event {
   date DateTime
   start DateTime
   end DateTime
+  signature String
 }
 
 model Job {
