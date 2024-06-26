@@ -20,6 +20,7 @@
 	import CJForm from './CJForm.svelte';
 	import CEForm from './CEForm.svelte';
 	import { goto } from '$app/navigation';
+	import { dateProxy } from 'sveltekit-superforms';
 
 	let plugins = [TimeGrid, DayGrid, List];
 	$: options = {

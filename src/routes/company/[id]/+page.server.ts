@@ -3,9 +3,11 @@ import db from "$lib/db";
 import { redirect, fail } from '@sveltejs/kit';
 import { zod } from 'sveltekit-superforms/adapters';
 import { setError, superValidate } from 'sveltekit-superforms';
-import { createEventSchema, createJobSchema, createWorkerSchema } from '$lib/zod';
+import { createEventSchema, createJobSchema, createWorkerSchema, type Color } from '$lib/zod';
 import { scheduleJobEvents } from '$lib/functions/scheduling';
 import { setFlash } from 'sveltekit-flash-message/server';
+import { formdata } from '$lib';
+import { get } from 'svelte/store';
 
 export const load = (async ({ params }) => {
     // Get the company from the database
@@ -45,10 +47,18 @@ export const load = (async ({ params }) => {
         }
     })
 
+    const prefill = get(formdata)
+
+    const typedPrefill = {
+        ...prefill,
+        color: prefill.color as Color
+    }
+
+
     // Forms
     const createWorkerForm = await superValidate(zod(createWorkerSchema));
     const createJobForm = await superValidate(zod(createJobSchema));
-    const createEventForm = await superValidate(zod(createEventSchema));
+    const createEventForm = await superValidate(typedPrefill, zod(createEventSchema));
 
     return {
         company,
@@ -123,7 +133,8 @@ export const actions = {
                     id: form.data.worker
                 }
             })
-        } catch {
+        } catch(error) {
+            console.log(error)
             setFlash({ type: 'error', message: 'Database Error - Please Refresh Page' }, event)
             return setError(form, "Database Error")
         }
@@ -186,6 +197,13 @@ export const actions = {
             // Ensure the date is set to the start of the day in Eastern Time
             const dateInEastern = new Date(startInEastern);
             dateInEastern.setHours(0, 0, 0, 0);
+
+            formdata.set({
+                color: form.data.color,
+                startDate: dateInEastern,
+                worker: event.workerId,
+                job: event.jobId
+            })
 
             await db.event.create({
                 data: {

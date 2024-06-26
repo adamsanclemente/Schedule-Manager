@@ -5,7 +5,7 @@
 
 	import { createEventSchema, type CreateEventSchema } from '$lib/zod';
 	import { Plus } from 'lucide-svelte';
-	import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
+	import { type SuperValidated, type Infer, superForm, dateProxy } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { colors } from '$lib/zod';
 	import { invalidateAll } from '$app/navigation';
@@ -60,6 +60,8 @@
 				value: $formData.job
 			}
 		: undefined;
+
+	$: CEDateProxy = dateProxy(form, 'startDate', { format: 'date', empty: 'null' });
 </script>
 
 <form
@@ -128,7 +130,7 @@
 		<Form.Field {form} name="startDate" class="w-full md:w-1/4">
 			<Form.Control let:attrs>
 				<Form.Label>Start Date</Form.Label>
-				<Input type="date" {...attrs} bind:value={$formData.startDate} />
+				<Input type="date" {...attrs} bind:value={$CEDateProxy} />
 			</Form.Control>
 			<Form.FieldErrors />
 		</Form.Field>
@@ -163,8 +165,12 @@
 			<Form.FieldErrors />
 		</Form.Field>
 
-		<Form.Button name="submit" on:click={() => $CalendarRefresh = !$CalendarRefresh} class="mt-1 sm:mt-8 w-full sm:w-[12%]" size="icon" variant="outline"
-			><Plus /></Form.Button
+		<Form.Button
+			name="submit"
+			on:click={() => ($CalendarRefresh = !$CalendarRefresh)}
+			class="mt-1 sm:mt-8 w-full sm:w-[12%]"
+			size="icon"
+			variant="outline"><Plus /></Form.Button
 		>
 	</div>
 </form>

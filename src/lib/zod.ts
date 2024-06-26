@@ -38,7 +38,7 @@ export const createEventSchema = z.object({
     color: z.enum(Object.keys(colors) as [Color, ...Color[]]),
     job: z.string(),
     worker: z.string(),
-    startDate: z.string().refine(validator.isISO8601, "Invalid date"),
+    startDate: z.date(),
 })
 
 export const editEventSchema = z.object({
