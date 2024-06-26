@@ -15,6 +15,7 @@
    
     const form = superForm(data, {
       validators: zodClient(createWorkerSchema),
+      invalidateAll: true,
     });
    
     const { form: formData, enhance } = form;

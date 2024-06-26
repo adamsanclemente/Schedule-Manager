@@ -9,7 +9,8 @@
 	export let data: PageData;
 
 	const form = superForm(data.form, {
-		validators: zodClient(createJobSchema)
+		validators: zodClient(createJobSchema),
+		invalidateAll: true
 	});
 
 	const { form: formData, enhance } = form;

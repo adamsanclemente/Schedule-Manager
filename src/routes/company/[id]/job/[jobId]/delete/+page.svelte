@@ -10,7 +10,8 @@
 	export let data: PageData;
 
 	const form = superForm(data.form, {
-		validators: zodClient(confirmSchema)
+		validators: zodClient(confirmSchema),
+		invalidateAll: true
 	});
 
 	const { form: formData, enhance } = form;

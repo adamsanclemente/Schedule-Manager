@@ -26,7 +26,8 @@
 	}[];
 
 	const form = superForm(data, {
-		validators: zodClient(createEventSchema)
+		validators: zodClient(createEventSchema),
+		invalidateAll: true
 	});
 
 	const { form: formData, enhance } = form;

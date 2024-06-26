@@ -15,6 +15,7 @@
    
     const form = superForm(data, {
       validators: zodClient(createJobSchema),
+      invalidateAll: true,
     });
    
     const { form: formData, enhance } = form;
