@@ -5,6 +5,7 @@
 	import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import type { PageData } from './$types';
+	import { Button } from '$lib/components/ui/button';
 
 	export let data: PageData;
 
@@ -22,11 +23,13 @@
 	<Form.Field {form} name="confirm">
 		<Form.Control let:attrs>
 			<Form.Label>Are you sure you want to delete this job?</Form.Label>
-			<Input {...attrs} bind:value={$formData.confirm} placeholder="Confirm" />
+			<Input {...attrs} bind:value={$formData.confirm} placeholder="Confirm" class="hidden mb-3"/>
 		</Form.Control>
-		<Form.Description>Enter "Confirm" to confirm deletion</Form.Description>
 		<Form.FieldErrors />
 	</Form.Field>
 
-	<Form.Button>Submit</Form.Button>
+	<div class="flex flex-row gap-3">
+		<Form.Button type="submit" variant="destructive">Delete</Form.Button>
+		<Button variant="outline" on:click={() => {window.history.back()}}>Cancel</Button>
+	</div>
 </form>

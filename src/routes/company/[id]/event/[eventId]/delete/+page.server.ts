@@ -6,7 +6,9 @@ import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 
 export const load = (async () => {
-    const form = await superValidate(zod(confirmSchema));
+    const form = await superValidate({
+        confirm: 'Confirm'
+    }, zod(confirmSchema));
 
     return {
         form

@@ -6,7 +6,9 @@ import { redirect } from '@sveltejs/kit';
 import db from '$lib/db';
 
 export const load = (async () => {
-    const form = await superValidate(zod(confirmSchema));
+    const form = await superValidate({
+        confirm: 'Confirm'
+    }, zod(confirmSchema));
 
     return {
         form
