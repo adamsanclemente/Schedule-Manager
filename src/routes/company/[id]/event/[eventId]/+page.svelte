@@ -67,16 +67,16 @@
 					<Select.Value placeholder="Choose a Color" />
 				</Select.Trigger>
 				<Select.Content>
-					<Select.Item value="#b72205" label="Tomato" style="color: #b72205" />
-					<Select.Item value="#cf8074" label="Flamingo" style="color: #cf8074" />
-					<Select.Item value="#e8c039" label="Banana" style="color: #e8c039" />
-					<Select.Item value="#6eb47c" label="Sage" style="color: #6eb47c" />
-					<Select.Item value="#477e47" label="Basil" style="color: #477e47" />
-					<Select.Item value="#589ae2" label="Peacock" style="color: #589ae2" />
-					<Select.Item value="#4652b2" label="Blueberry" style="color: #4652b2" />
-					<Select.Item value="#7286c9" label="Lavender" style="color: #7286c9" />
-					<Select.Item value="#7c2ca7" label="Grape" style="color: #7c2ca7" />
-					<Select.Item value="#616161" label="Graphite" style="color: #616161" />
+					<Select.Item value="#b72205" label="Red" style="color: #b72205" />
+					<Select.Item value="#cf8074" label="Orange" style="color: #cf8074" />
+					<Select.Item value="#e8c039" label="Yellow" style="color: #e8c039" />
+					<Select.Item value="#6eb47c" label="Light Green" style="color: #6eb47c" />
+					<Select.Item value="#477e47" label="Dark Green" style="color: #477e47" />
+					<Select.Item value="#589ae2" label="Light Blue" style="color: #589ae2" />
+					<Select.Item value="#4652b2" label="Dark Blue" style="color: #4652b2" />
+					<Select.Item value="#7286c9" label="Light Purple" style="color: #7286c9" />
+					<Select.Item value="#7c2ca7" label="Dark Purple" style="color: #7c2ca7" />
+					<Select.Item value="#616161" label="Gray" style="color: #616161" />
 				</Select.Content>
 			</Select.Root>
 			<input hidden bind:value={$formData.color} name={attrs.name} />

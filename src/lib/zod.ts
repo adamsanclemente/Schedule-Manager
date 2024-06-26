@@ -17,16 +17,16 @@ export const createJobSchema = z.object({
 })
 
 export const colors = {
-    "#b72205": "Tomato",
-    "#cf8074": "Flamingo",
-    "#e8c039": "Banana",
-    "#6eb47c": "Sage",
-    "#477e47": "Basil",
-    "#589ae2": "Peacock",
-    "#4652b2": "Blueberry",
-    "#7286c9": "Lavender",
-    "#7c2ca7": "Grape",
-    "#616161": "Graphite",
+    "#b72205": "Red",
+    "#cf8074": "Orange",
+    "#e8c039": "Yellow",
+    "#6eb47c": "Light Green",
+    "#477e47": "Dark Green",
+    "#589ae2": "Light Blue",
+    "#4652b2": "Dark Blue",
+    "#7286c9": "Light Purple",
+    "#7c2ca7": "Purple",
+    "#616161": "Gray",
 }
 
 export const colorsArray = Object.entries(colors).map(([key, value]) => ({ key, value }));
