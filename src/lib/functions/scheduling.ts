@@ -75,7 +75,7 @@ async function getAvailableTimeSlots(existingEvents: Event[], currentDate: Date,
     startOfDay.setHours(startHour, 0, 0, 0);
 
     const endOfDay = new Date(startOfDay);
-    endOfDay.setHours(startHour + maxDailyHours, 0, 0, 0);
+    endOfDay.setHours(startHour + (maxDailyHours + 1), 0, 0, 0);
 
     let lastEnd = startOfDay;
 
