@@ -32,7 +32,12 @@ export const load = (async ({ params }) => {
     })
 
     // Filter out any jobs with workers already assigned
-    const filteredJobs = jobs.filter(job => job.employeeIds.length === 0);
+    const filteredJobs = jobs.map(job => {
+        return {
+            ...job,
+            title: job.title + ` (${job.hours}H)`
+        }
+    });
 
     const events = await db.event.findMany({
         where: {
@@ -75,11 +80,11 @@ export const actions = {
         })
 
         if (!worker) {
-            setFlash({type: 'error', message: 'Failed to create worker'}, event)
+            setFlash({ type: 'error', message: 'Failed to create worker' }, event)
             return setError(form, "Failed to create worker")
         }
 
-        setFlash({type: 'success', message: 'Worker created successfully'}, event)
+        setFlash({ type: 'success', message: 'Worker created successfully' }, event)
         return redirect(302, `/company/${event.params.id}`);
     },
     createJob: async (event) => {
@@ -95,14 +100,13 @@ export const actions = {
             }
         })
 
-        if (!job)
-            {
-                setFlash({type: 'error', message: 'Failed to create job'}, event)
-                return setError(form, "Failed to create job")
-            
-            }
+        if (!job) {
+            setFlash({ type: 'error', message: 'Failed to create job' }, event)
+            return setError(form, "Failed to create job")
 
-        setFlash({type: 'success', message: 'Job created successfully'}, event)
+        }
+
+        setFlash({ type: 'success', message: 'Job created successfully' }, event)
         return redirect(302, `/company/${event.params.id}`);
     },
     createEvent: async (event) => {
@@ -119,7 +123,7 @@ export const actions = {
         })
 
         if (!worker) {
-            setFlash({type: 'error', message: 'Invalid worker'}, event)
+            setFlash({ type: 'error', message: 'Invalid worker' }, event)
             return setError(form, "Invalid worker")
         }
 
@@ -131,15 +135,12 @@ export const actions = {
         })
 
         if (!job) {
-            setFlash({type: 'error', message: 'Invalid job'}, event)
+            setFlash({ type: 'error', message: 'Invalid job' }, event)
             return setError(form, "Invalid job")
         }
 
         // Check if the worker is already assigned to the job
-        if (job.employeeIds.length > 1) {
-            setFlash({type: 'error', message: 'A worker is already assigned to the job'}, event)
-            return setError(form, "A worker is already assigned to the job")
-        } else {
+        if (!job.employeeIds.includes(worker.id)) {
             // Assign the worker to the job
             await db.job.update({
                 where: {
@@ -150,6 +151,7 @@ export const actions = {
                 }
             })
         }
+
 
         // Get all events to create
         const eventsToCreate = await scheduleJobEvents(worker.id, `${worker.firstName} ${worker.lastName}`, job.id, job.title, job.hours, new Date(form.data.startDate), worker.maxHours);
@@ -191,7 +193,7 @@ export const actions = {
         }
 
         // Refresh the page
-        setFlash({type: 'success', message: 'Events created successfully'}, event)
+        setFlash({ type: 'success', message: 'Events created successfully' }, event)
         return redirect(302, `/company/${event.params.id}`);
     }
 }
