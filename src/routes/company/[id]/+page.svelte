@@ -20,11 +20,10 @@
 	import CJForm from './CJForm.svelte';
 	import CEForm from './CEForm.svelte';
 	import { goto } from '$app/navigation';
-	import { dateProxy } from 'sveltekit-superforms';
 
 	let plugins = [TimeGrid, DayGrid, List];
 	$: options = {
-		view: 'timeGridDay',
+		view: $CalendarView,
 		events: data.data.events,
 		headerToolbar: {
 			start: 'title,prev,next',
@@ -34,12 +33,16 @@
 		height: '600px',
 		eventClick: function (info: { event: any }) {
 			goto(`/company/${data.company.id}/event/${info.event.id}`);
+		},
+		viewDidMount: function (info: { type: string}) {
+			CalendarView.set(info.type);
 		}
 	};
 
 	export const CWFormOpen = writable(false);
 	export const CJFormOpen = writable(false);
 	export const CalendarRefresh = writable(false);
+	export const CalendarView = writable('timeGridDay');
 </script>
 
 <svelte:head>

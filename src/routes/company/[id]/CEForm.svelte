@@ -8,7 +8,6 @@
 	import { type SuperValidated, type Infer, superForm, dateProxy } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { colors } from '$lib/zod';
-	import { invalidateAll } from '$app/navigation';
 	import type { Writable } from 'svelte/store';
 	export let CalendarRefresh: Writable<boolean>;
 	export let data: SuperValidated<Infer<CreateEventSchema>>;
