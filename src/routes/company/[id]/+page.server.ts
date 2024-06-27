@@ -47,6 +47,23 @@ export const load = (async ({ params }) => {
         }
     })
 
+    // Filter events so that there is only one event with a unique signature per day
+    let monthEvents = events.filter((event, index, self) => {
+        return index === self.findIndex(e => (
+            e.signature === event.signature && new Date(e.date).toDateString() === new Date(event.date).toDateString()
+        ));
+    }
+    );
+
+    // map the events to make them appear as all day events allDay = true
+    monthEvents = monthEvents.map(event => {
+        return {
+            ...event,
+            allDay: true
+        }
+    })
+
+
     const prefill = get(formdata)
 
     const typedPrefill = {
@@ -69,7 +86,8 @@ export const load = (async ({ params }) => {
             workers,
             jobs,
             filteredJobs,
-            events
+            events,
+            monthEvents
         }
     };
 }) satisfies PageServerLoad;
@@ -133,7 +151,7 @@ export const actions = {
                     id: form.data.worker
                 }
             })
-        } catch(error) {
+        } catch (error) {
             console.log(error)
             setFlash({ type: 'error', message: 'Database Error - Please Refresh Page' }, event)
             return setError(form, "Database Error")

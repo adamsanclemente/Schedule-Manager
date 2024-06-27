@@ -21,10 +21,12 @@
 	import CEForm from './CEForm.svelte';
 	import { goto } from '$app/navigation';
 
+	$:events = data.data.events;
+
 	let plugins = [TimeGrid, DayGrid, List];
 	$: options = {
 		view: $CalendarView,
-		events: data.data.events,
+		events: events,
 		headerToolbar: {
 			start: 'title,prev,next',
 			center: 'today,timeGridDay,timeGridWeek,dayGridMonth,listWeek',
@@ -34,8 +36,18 @@
 		eventClick: function (info: { event: any }) {
 			goto(`/company/${data.company.id}/event/${info.event.id}`);
 		},
-		viewDidMount: function (info: { type: string}) {
-			CalendarView.set(info.type);
+		viewDidMount: function (info: { type: string}) {		
+			if(info.type === 'dayGridMonth') {
+				// Get the month events
+				events = data.data.monthEvents
+				// Refresh the calendar
+				CalendarRefresh.set(!CalendarRefresh);
+			} else {
+				// Get the day events
+				events = data.data.events
+				// Refresh the calendar
+				CalendarRefresh.set(!CalendarRefresh);
+			}
 		}
 	};
 

@@ -1,14 +1,8 @@
 <script lang="ts" generics="T extends Record<string, unknown>">
 	import * as Form from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
-	import { editEventSchema, type EditEventSchema } from '$lib/zod';
-	import {
-		type SuperValidated,
-		type Infer,
-		superForm,
-		dateProxy,
-		type FormPathLeaves
-	} from 'sveltekit-superforms';
+	import { editEventSchema } from '$lib/zod';
+	import { superForm, dateProxy } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import type { PageData } from './$types';
 	import * as Select from '$lib/components/ui/select';

@@ -4,7 +4,7 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { editEventSchema } from '$lib/zod';
 import { redirect } from '@sveltejs/kit';
 import db from '$lib/db';
-import { colorsArray, type Color } from '$lib/zod';
+import { type Color } from '$lib/zod';
 import { setFlash } from 'sveltekit-flash-message/server';
 
 
@@ -25,7 +25,7 @@ export const load = (async ({ params }) => {
         title: event.title,
         start: event.start,
         end: event.end,
-        color: (event.color && colorsArray.find(item => item.value === event.color) ? event.color : '#b72205') as Color
+        color: event.color as Color
     }
 
     const form = await superValidate(filteredEvent, zod(editEventSchema));
