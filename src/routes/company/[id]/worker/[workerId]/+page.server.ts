@@ -7,52 +7,51 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { setFlash } from 'sveltekit-flash-message/server';
 
 export const load = (async ({ params }) => {
+	// get the worker from the database
 
-    // get the worker from the database
+	const worker = await db.employee.findUnique({
+		where: {
+			id: params.workerId
+		}
+	});
 
-    const worker = await db.employee.findUnique({
-        where: {
-            id: params.workerId
-        }
-    })
+	if (!worker) {
+		return redirect(404, '/404');
+	}
 
-    if (!worker) {
-        return redirect(404, '/404');
-    }
+	const filteredWorker = {
+		id: worker.id,
+		firstName: worker.firstName,
+		lastName: worker.lastName,
+		dailyHours: worker.maxHours
+	};
 
-    const filteredWorker = {
-        id: worker.id,
-        firstName: worker.firstName,
-        lastName: worker.lastName,
-        dailyHours: worker.maxHours
-    }
+	const editWorkerForm = await superValidate(filteredWorker, zod(createWorkerSchema));
 
-    const editWorkerForm = await superValidate(filteredWorker, zod(createWorkerSchema));
-
-    return {
-        form: editWorkerForm
-    };
+	return {
+		form: editWorkerForm
+	};
 }) satisfies PageServerLoad;
 
 export const actions = {
-    editWorker: async (event) => {
-        const form = await superValidate(event.request, zod(createWorkerSchema));
-        if (!form.valid) return { status: 400, body: { form } }
+	editWorker: async (event) => {
+		const form = await superValidate(event.request, zod(createWorkerSchema));
+		if (!form.valid) return { status: 400, body: { form } };
 
-        const { firstName, lastName, dailyHours } = form.data;
+		const { firstName, lastName, dailyHours } = form.data;
 
-        await db.employee.update({
-            where: {
-                id: event.params.workerId
-            },
-            data: {
-                firstName,
-                lastName,
-                maxHours: dailyHours
-            }
-        });
+		await db.employee.update({
+			where: {
+				id: event.params.workerId
+			},
+			data: {
+				firstName,
+				lastName,
+				maxHours: dailyHours
+			}
+		});
 
-        setFlash({ message: 'Worker updated', type: 'success' }, event)
-        return redirect(302, `/company/${event.params.id}`);
-    }
-}
+		setFlash({ message: 'Worker updated', type: 'success' }, event);
+		return redirect(302, `/company/${event.params.id}`);
+	}
+};

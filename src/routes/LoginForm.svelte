@@ -15,14 +15,13 @@
 	const { form: formData, enhance } = form;
 </script>
 
-
 <form method="POST" use:enhance>
-    <Form.Field {form} name="login">
-      <Form.Control let:attrs>
-        <Form.Label>Company Login</Form.Label>
-        <Input {...attrs} bind:value={$formData.login} placeholder="Enter Company Login Here..."/>
-      </Form.Control>
-      <Form.FieldErrors />
-    </Form.Field>
-    <Form.Button class="w-full my-4">Submit</Form.Button>
-  </form>
+	<Form.Field {form} name="login">
+		<Form.Control let:attrs>
+			<Form.Label>Company Login</Form.Label>
+			<Input {...attrs} bind:value={$formData.login} placeholder="Enter Company Login Here..." />
+		</Form.Control>
+		<Form.FieldErrors />
+	</Form.Field>
+	<Form.Button class="w-full my-4">Submit</Form.Button>
+</form>

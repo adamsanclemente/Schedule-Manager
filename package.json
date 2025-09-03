@@ -1,15 +1,38 @@
 {
 	"name": "schedule-manager",
-	"version": "0.0.1",
+	"version": "1.0.0",
+	"description": "A mobile-first scheduling application for small businesses to manage workers, jobs, and schedules",
+	"author": "Adam Sanclemente <adam@sanclemente.com>",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/adamsanclemente/Schedule-Manager.git"
+	},
+	"keywords": [
+		"scheduling",
+		"workforce-management",
+		"calendar",
+		"svelte",
+		"sveltekit",
+		"prisma",
+		"mongodb",
+		"small-business"
+	],
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
 		"build": "prisma generate && vite build",
 		"preview": "vite preview",
+		"start": "node build",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"db:generate": "prisma generate",
+		"db:push": "prisma db push",
+		"db:seed": "prisma db seed",
+		"db:studio": "prisma studio",
+		"db:reset": "prisma migrate reset"
 	},
 	"prisma": {
 		"seed": "node --loader ts-node/esm prisma/seed.ts"

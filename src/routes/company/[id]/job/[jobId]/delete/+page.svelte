@@ -24,13 +24,18 @@
 	<Form.Field {form} name="confirm">
 		<Form.Control let:attrs>
 			<Form.Label>Are you sure you want to delete this job?</Form.Label>
-			<Input {...attrs} bind:value={$formData.confirm} placeholder="Confirm" class="hidden mb-3"/>
+			<Input {...attrs} bind:value={$formData.confirm} placeholder="Confirm" class="hidden mb-3" />
 		</Form.Control>
 		<Form.FieldErrors />
 	</Form.Field>
 
 	<div class="flex flex-row gap-3">
 		<Form.Button type="submit" variant="destructive">Delete</Form.Button>
-		<Button variant="outline" on:click={() => {window.history.back()}}>Cancel</Button>
+		<Button
+			variant="outline"
+			on:click={() => {
+				window.history.back();
+			}}>Cancel</Button
+		>
 	</div>
 </form>

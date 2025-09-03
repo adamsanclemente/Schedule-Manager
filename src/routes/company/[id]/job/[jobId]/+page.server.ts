@@ -7,47 +7,45 @@ import db from '$lib/db';
 import { setFlash } from 'sveltekit-flash-message/server';
 
 export const load = (async ({ params }) => {
+	// Get the job from the database
+	const job = await db.job.findUnique({
+		where: {
+			id: params.jobId
+		}
+	});
 
-    // Get the job from the database
-    const job = await db.job.findUnique({
-        where: {
-            id: params.jobId
-        }
-    })
+	if (!job) {
+		return redirect(404, '/404');
+	}
 
-    if (!job) {
-        return redirect(404, '/404');
-    }
+	const form = await superValidate(job, zod(createJobSchema));
 
-    const form = await superValidate(job, zod(createJobSchema));
-
-    return {
-        form
-    };
+	return {
+		form
+	};
 }) satisfies PageServerLoad;
 
 export const actions = {
-    editJob : async (event) => {
-        const form = await superValidate(event.request, zod(createJobSchema));
-        if (!form.valid) {
-            setFlash({ message: 'Form Invalid.', type: 'error' }, event)
-            return setError(form, 'Invalid form');
-        }
+	editJob: async (event) => {
+		const form = await superValidate(event.request, zod(createJobSchema));
+		if (!form.valid) {
+			setFlash({ message: 'Form Invalid.', type: 'error' }, event);
+			return setError(form, 'Invalid form');
+		}
 
-        const { title, hours } = form.data;
+		const { title, hours } = form.data;
 
-        await db.job.update({
-            where: {
-                id: event.params.jobId
-            },
-            data: {
-                title,
-                hours
-            }
-        });
+		await db.job.update({
+			where: {
+				id: event.params.jobId
+			},
+			data: {
+				title,
+				hours
+			}
+		});
 
-
-        setFlash({ message: 'Job updated', type: 'success' }, event)
-        return redirect(302, `/company/${event.params.id}`);
-    }
-}
+		setFlash({ message: 'Job updated', type: 'success' }, event);
+		return redirect(302, `/company/${event.params.id}`);
+	}
+};

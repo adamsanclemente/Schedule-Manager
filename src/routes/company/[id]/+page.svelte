@@ -21,7 +21,7 @@
 	import CEForm from './CEForm.svelte';
 	import { goto } from '$app/navigation';
 
-	$:events = data.data.events;
+	$: events = data.data.events;
 
 	let plugins = [TimeGrid, DayGrid, List];
 	$: options = {
@@ -36,15 +36,15 @@
 		eventClick: function (info: { event: any }) {
 			goto(`/company/${data.company.id}/event/${info.event.id}`);
 		},
-		viewDidMount: function (info: { type: string}) {		
-			if(info.type === 'dayGridMonth') {
+		viewDidMount: function (info: { type: string }) {
+			if (info.type === 'dayGridMonth') {
 				// Get the month events
-				events = data.data.monthEvents
+				events = data.data.monthEvents;
 				// Refresh the calendar
 				CalendarRefresh.set(!CalendarRefresh);
 			} else {
 				// Get the day events
-				events = data.data.events
+				events = data.data.events;
 				// Refresh the calendar
 				CalendarRefresh.set(!CalendarRefresh);
 			}

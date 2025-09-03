@@ -7,48 +7,51 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { setFlash } from 'sveltekit-flash-message/server';
 
 export const load = (async () => {
-    const form = await superValidate({
-        confirm: 'Confirm'
-    }, zod(confirmSchema));
+	const form = await superValidate(
+		{
+			confirm: 'Confirm'
+		},
+		zod(confirmSchema)
+	);
 
-    return {
-        form
-    };
+	return {
+		form
+	};
 }) satisfies PageServerLoad;
 
 export const actions = {
-    deleteEvent: async (event) => {
-        const form = await superValidate(event.request, zod(confirmSchema));
-        if (!form.valid) {
-            setFlash({ message: 'Invalid confirmation', type: 'error' }, event)
-            return setError(form, 'confirm', 'Invalid confirmation');
-        }
+	deleteEvent: async (event) => {
+		const form = await superValidate(event.request, zod(confirmSchema));
+		if (!form.valid) {
+			setFlash({ message: 'Invalid confirmation', type: 'error' }, event);
+			return setError(form, 'confirm', 'Invalid confirmation');
+		}
 
-        const { confirm } = form.data;
+		const { confirm } = form.data;
 
-        if (confirm !== 'Confirm') {
-            setFlash({ message: 'Invalid confirmation', type: 'error' }, event)
-            return setError(form, 'confirm', 'Invalid confirmation');
-        }
+		if (confirm !== 'Confirm') {
+			setFlash({ message: 'Invalid confirmation', type: 'error' }, event);
+			return setError(form, 'confirm', 'Invalid confirmation');
+		}
 
-        const foundEvent = await db.event.findUnique({
-            where: {
-                id: event.params.eventId
-            }
-        })
+		const foundEvent = await db.event.findUnique({
+			where: {
+				id: event.params.eventId
+			}
+		});
 
-        if (!foundEvent) {
-            setFlash({ message: 'Event not found', type: 'error' }, event)
-            return setError(form, 'confirm', 'Event not found');
-        }
+		if (!foundEvent) {
+			setFlash({ message: 'Event not found', type: 'error' }, event);
+			return setError(form, 'confirm', 'Event not found');
+		}
 
-        await db.event.deleteMany({
-            where: {
-                signature: foundEvent.signature
-            }
-        })
+		await db.event.deleteMany({
+			where: {
+				signature: foundEvent.signature
+			}
+		});
 
-        setFlash({ message: 'Events deleted', type: 'success' }, event)
-        return redirect(302, `/company/${event.params.id}`);
-    }
-}
+		setFlash({ message: 'Events deleted', type: 'success' }, event);
+		return redirect(302, `/company/${event.params.id}`);
+	}
+};

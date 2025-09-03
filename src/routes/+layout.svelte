@@ -12,15 +12,15 @@
 
 	$: $mode, manageCalendarClasses();
 	const flash = getFlash(page);
-	//$: console.log('+layout.svelte root flash: ' + JSON.stringify($flash));
+	// $: console.log('+layout.svelte root flash: ' + JSON.stringify($flash));
 	$: if ($flash) {
 		switch ($flash.type) {
 			case 'success':
-				//console.log('flash.message.success: ' + $flash.message);
+				// console.log('flash.message.success: ' + $flash.message);
 				toast.success($flash.message);
 				break;
 			case 'error':
-				//console.log('flash.message.error: ' + $flash.message);
+				// console.log('flash.message.error: ' + $flash.message);
 				toast.error($flash.message);
 				break;
 		}
