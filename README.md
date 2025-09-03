@@ -2,11 +2,11 @@
 
 A modern, mobile-first scheduling application built for small businesses to efficiently manage workers, jobs, and schedules. Originally developed for a truck bed lining company to streamline their daily operations and worker allocation.
 
-## � Project Status
+## ❗ Project Status
 
 > **Note**: This project was created as a practice exercise to learn SvelteKit, MongoDB, and other modern web technologies. It was completed in about 2 weeks over the course of a month and is **no longer maintained as of June 2024**. The codebase serves as a demonstration of full-stack development skills and real-world application architecture.
 
-## �🚀 Features
+## 🚀 Features
 
 - **📱 Mobile-First Design**: Optimized for mobile devices to manage schedules on-the-go
 - **👥 Worker Management**: Add, edit, and manage employee information and daily hour limits
@@ -210,7 +210,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Contact
 
-### Adam Sanclemente
+### Adam San Clemente
 
 - GitHub: [@adamsanclemente](https://github.com/adamsanclemente)
 - LinkedIn: [Adam Sanclemente](https://linkedin.com/in/adamsanclemente)
