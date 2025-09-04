@@ -213,7 +213,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ### Adam San Clemente
 
 - GitHub: [@adamsanclemente](https://github.com/adamsanclemente)
-- LinkedIn: [Adam Sanclemente](https://linkedin.com/in/adamsanclemente)
+- LinkedIn: [Adam San Clemente](https://linkedin.com/in/adam-san-clemente)
 - Email: [abombsc@gmail.com](mailto:abombsc@gmail.com)
 
 ## 🙏 Acknowledgments
